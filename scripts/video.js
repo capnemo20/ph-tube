@@ -37,6 +37,11 @@ const displayCatagories = (categories) => {
     button.classList = "btn";
     button.innerText = item.category;
 
+    // -----important-----
+    //how to stop loading alert automatically
+    //wrap alert in an arrow function
+    button.onclick=()=>alert("hello")
+
     //add button to category container
     categoryContainer.append(button);
   });
