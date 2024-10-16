@@ -40,7 +40,7 @@ const displayCatagories = (categories) => {
     // -----important-----
     //how to stop loading alert automatically
     //wrap alert in an arrow function
-    button.onclick=()=>alert("hello")
+    button.onclick=()=>{alert("hello")}
 
     //add button to category container
     categoryContainer.append(button);
