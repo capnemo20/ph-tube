@@ -1,5 +1,15 @@
-// 1. Fetch, Load ans Show Catagories on html
 
+//get time function
+function getTimeString(time){
+    const hours = parseInt(time/3600);
+    let remainingSeconds = time%3600;
+    const minutes = parseInt(remainingSeconds/60);
+    remainingSeconds = remainingSeconds%60;
+    return `${hours}h ${minutes}m ${remainingSeconds}s`
+}
+
+
+// 1. Fetch, Load ans Show Catagories on html
 //create Load Catagories
 const loadCatagories = () => {
   //fetch the data
@@ -67,7 +77,7 @@ const displayVideos = (videos) => {
                  ? ""
                  : `
                 <span class="absolute right-2 bottom-2 bg-black rounded p-1 text-white">
-            ${video.others.posted_date}
+            ${getTimeString(video.others.posted_date)}
         </span>
                 `
              }
