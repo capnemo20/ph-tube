@@ -1,24 +1,11 @@
-
 //get time function
-function getTimeString(time){
-    const hours = parseInt(time/3600);
-    let remainingSeconds = time%3600;
-    const minutes = parseInt(remainingSeconds/60);
-    remainingSeconds = remainingSeconds%60;
-    return `${hours}h ${minutes}m ${remainingSeconds}s`
+function getTimeString(time) {
+  const hours = parseInt(time / 3600);
+  let remainingSeconds = time % 3600;
+  const minutes = parseInt(remainingSeconds / 60);
+  remainingSeconds = remainingSeconds % 60;
+  return `${hours}h ${minutes}m ${remainingSeconds}s`;
 }
-
-//function to load videos categorically
-const loadCategoryVideos = (id)=>{
-    // alert(id);
-    fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
-    .then((res) => res.json())
-    .then((data) => displayVideos(data.category))
-    .catch((error) => console.log(error));
-    
-}
-
-
 // 1. Fetch, Load ans Show Catagories on html
 //create Load Catagories
 const loadCatagories = () => {
@@ -36,6 +23,20 @@ const loadVideos = () => {
     .catch((error) => console.log(error));
 };
 
+//function to load videos categorically
+const loadCategoryVideos = (id) => {
+  // alert(id);
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const activeBtn = document.getElementById(`btn-${id}`);
+      console.log(activeBtn);
+      activeBtn.classList.add("active");
+      displayVideos(data.category);
+    })
+    .catch((error) => console.log(error));
+};
+
 //create Display Catagories
 const displayCatagories = (categories) => {
   const categoryContainer = document.getElementById("categories");
@@ -45,11 +46,11 @@ const displayCatagories = (categories) => {
     //create a button
     const buttonContainer = document.createElement("div");
     buttonContainer.innerHTML = `
-        <button onclick="loadCategoryVideos(${item.category_id})" class="btn">
+        <button id="btn-${item.category_id}" onclick="loadCategoryVideos(${item.category_id})" class="btn category-btn">
             ${item.category}
         </button>
     
-    `
+    `;
 
     // -----important-----
     //how to stop loading alert automatically
@@ -91,9 +92,8 @@ const displayVideos = (videos) => {
         <h2 class="text-center font-bold text-xl">No Content Here in this category</h2>
     </div>
     `;
-    return
-  }
-  else{
+    return;
+  } else {
     videoContainer.classList.add("grid");
   }
 
