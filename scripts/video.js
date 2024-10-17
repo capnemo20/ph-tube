@@ -8,6 +8,16 @@ function getTimeString(time){
     return `${hours}h ${minutes}m ${remainingSeconds}s`
 }
 
+//function to load videos categorically
+const loadCategoryVideos = (id)=>{
+    // alert(id);
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayVideos(data.category))
+    .catch((error) => console.log(error));
+    
+}
+
 
 // 1. Fetch, Load ans Show Catagories on html
 //create Load Catagories
@@ -33,17 +43,21 @@ const displayCatagories = (categories) => {
   categories.forEach((item) => {
     console.log(item);
     //create a button
-    const button = document.createElement("button");
-    button.classList = "btn";
-    button.innerText = item.category;
+    const buttonContainer = document.createElement("div");
+    buttonContainer.innerHTML = `
+        <button onclick="loadCategoryVideos(${item.category_id})" class="btn">
+            ${item.category}
+        </button>
+    
+    `
 
     // -----important-----
     //how to stop loading alert automatically
     //wrap alert in an arrow function
-    button.onclick=()=>{alert("hello")}
+    // button.onclick=()=>{alert("hello")}
 
     //add button to category container
-    categoryContainer.append(button);
+    categoryContainer.append(buttonContainer);
   });
 };
 // {
@@ -67,6 +81,7 @@ const displayCatagories = (categories) => {
 
 const displayVideos = (videos) => {
   const videoContainer = document.getElementById("videos");
+  videoContainer.innerHTML = "";
   videos.forEach((video) => {
     console.log(video);
     const card = document.createElement("div");
